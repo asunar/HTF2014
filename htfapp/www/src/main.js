@@ -9,7 +9,7 @@
     /* ---------------------------------- Local Functions ---------------------------------- */
 
     (function initializeNavigationBar() {
-        var navbar = $('#navbar');
+        var navbar = document.getElementById('navbar');
         replaceChildren(navbar, new NavigationBarView(adapter).render());
     })();
 
@@ -21,7 +21,7 @@
 
     function route() {
         var hash = window.location.hash;
-        var content = $('#content');
+        var content = document.getElementById('content');
 
         var showHome = function() {
             replaceChildren(content, new HomeView(adapter).render());
