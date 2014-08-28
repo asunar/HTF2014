@@ -57,11 +57,11 @@ var LocalStorageAdapter = function() {
     };
 
     this.getAcceptedSessionsByTimeSlot = function() {
-        return new ThatConfData().getAcceptedSessionsByTimeSlot();
+        return new HTF2014Data().getAcceptedSessionsByTimeSlot();
     };
 
     this.getSpeakers = function() {
-        return new ThatConfData().getSpeakers();
+        return new HTF2014Data().getSpeakers();
     };
 
     this.populateConfDays = function() {
@@ -96,7 +96,9 @@ var LocalStorageAdapter = function() {
             return {
                 Day: d.Day,
                 Sessions: d.Sessions.filter(function(s) {
-                    return _.contains(s.Speakers, speakerUserName);
+                    return _.contains(s.Speakers.map(function(speaker){
+											return speaker.UserName;
+										}), speakerUserName);
                 })
             }
         }).filter(function(day) {

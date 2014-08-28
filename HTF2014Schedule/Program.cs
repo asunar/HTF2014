@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace HTF2014Schedule
 {
   using System.IO;
+  using System.Text.RegularExpressions;
 
   using Newtonsoft.Json;
 
@@ -17,11 +18,13 @@ namespace HTF2014Schedule
       //FixDataIssues();
       var processedFile = @"C:\CODE\HTF2014\HTF2014 Schedule_processed.csv";
       var outputJsonFile = @"C:\CODE\HTF2014\HTF2014Schedule.js";
+      var speakersJsonFile = @"C:\CODE\HTF2014\HTF2014Speakers.js";
 
       var lines = File.ReadAllLines(processedFile);
       var sessions = new List<Session>();
       
       File.Delete(outputJsonFile);
+      File.Delete(speakersJsonFile);
       var counter = 1;
       for (int index = 0; index < lines.Length; index++)
       {
@@ -47,10 +50,11 @@ namespace HTF2014Schedule
       var confDay = new ConfDay(){ Day  = "9/13", Sessions = sessions.OrderBy(x => x.Order).ThenBy(x => x.ScheduledRoom).ToArray() };
       var json = JsonConvert.SerializeObject(confDay);
 
-      var streamWriter = File.CreateText(outputJsonFile);
-      streamWriter.Write(json);
-      streamWriter.Close();
-      streamWriter.Dispose();
+      File.WriteAllText(outputJsonFile, json);
+
+      var speakers = confDay.Sessions.SelectMany(x => x.Speakers).Distinct().ToArray().OrderBy(x => x.UserName);
+      var speakersJson = JsonConvert.SerializeObject(speakers);
+      File.WriteAllText(speakersJsonFile, speakersJson);
     }
 
     private static Session CreateSession(KeyValuePair<int, string> sessionStartIndexTime, string line, int id)
@@ -62,6 +66,8 @@ namespace HTF2014Schedule
       var time = sessionStartIndexTime.Value;
       var title = dataItems[sessionStartIndex];
       var speakerNames = dataItems[sessionStartIndex + 1];
+      Console.WriteLine(title);
+      var speakers = CreateSpeakers(speakerNames);
 
       return new Session()
                {
@@ -69,12 +75,32 @@ namespace HTF2014Schedule
                  Description = title,
                  Id = id,
                  ScheduledRoom = scheduledRoom,
-                 SpeakerNames = speakerNames,
-                 Speakers = speakerNames,
+                 Speakers = speakers,
                  Title = title,
                  Time = time
                };
 
+    }
+
+    private static Speaker[] CreateSpeakers(string speakerNames)
+    {
+      var speakers = new List<Speaker>();
+      var speakerNamesArray = Regex.Split(speakerNames, " and ");
+      speakerNamesArray.ToList().ForEach(x => speakers.Add(CreateSpeaker(x)));
+      return speakers.ToArray();
+
+    }
+
+    private static Speaker CreateSpeaker(string speakerName )
+    {
+      var names = speakerName.Trim().Split(' ');
+      var namesLength = names.Length;
+      var firstName = names[0];
+      var firstInitial = firstName.Substring(0, 1);
+      var lastName = names[namesLength - 1];
+      var userName = firstInitial + lastName;
+
+      return new Speaker() { UserName = userName, FirstName = firstName, LastName = lastName };
     }
 
     public class ConfDay
@@ -90,8 +116,13 @@ namespace HTF2014Schedule
       public int Id { get; set; }
       public bool isInMySchedule { get; set; }
       public string ScheduledRoom { get; set; }
-      public string SpeakerNames { get; set; }
-      public string Speakers { get; set; }
+      public string SpeakerNames { get
+      {
+        var speakerNames = this.Speakers.Select(x => x.FirstName + " " + x.LastName).ToArray();
+        return string.Join(", ", speakerNames);
+      } 
+      }
+      public Speaker[] Speakers { get; set; }
       public string Time { get; set; }
       public string Title { get; set; }
 
@@ -100,6 +131,25 @@ namespace HTF2014Schedule
         var substringLength = Time.Split(':')[0].Length;
         return Convert.ToInt16(Time.Substring(0,substringLength));
       }}
+    }
+
+    public class Speaker
+    {
+      public string UserName { get; set; }
+
+      public string FirstName { get; set; }
+
+      public string LastName { get; set; }
+
+      public override bool Equals(object obj)
+      {
+        return this.UserName.Equals(((Speaker)obj).UserName);
+      }
+
+      public override int GetHashCode()
+      {
+        return this.UserName.GetHashCode();
+      }
     }
     private static void FixDataIssues()
     {
