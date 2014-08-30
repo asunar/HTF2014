@@ -18,12 +18,7 @@ var LocalStorageAdapter = function() {
                 url: '#speakers',
                 label: 'Speakers',
                 icon: 'fa fa-user'
-            }, {
-                id: 'lnkFamilySessions',
-                url: '#familysessions',
-                label: 'Family Sessions',
-                icon: 'fa fa-child'
-            }, ],
+            },  ],
 
             [{
                 id: 'lnkMySchedule',
@@ -35,12 +30,7 @@ var LocalStorageAdapter = function() {
                 url: '#map',
                 label: 'Map',
                 icon: 'fa fa-map-marker'
-            }, {
-                id: 'lnkCodeOfConduct',
-                url: '#policies',
-                label: 'Code of Conduct',
-                icon: 'fa fa-book'
-            }, ]
+            },  ]
 
 
         ]
