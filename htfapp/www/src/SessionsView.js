@@ -11,7 +11,7 @@ var SessionsView = function(sessionsToDisplay, adapter) {
 					<ul class='table-view'> \
 				{{#Sessions}} \
 					{{#.}} \
-					<li class='table-view-cell'> \
+					<li class='table-view-cell {{ OddOrEvenTime }}'> \
 						<a class='navigate-right' href='#sessiondetails?id={{ Id }}' > \
 						<span class='media-object pull-left '>{{ this.Time }}</span> \
 						{{ this.Title }} \

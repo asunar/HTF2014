@@ -125,6 +125,9 @@ textarea {
 		color: #23211d
 	} 
 
+	li.odd{
+		background-color: #b3d4fc;
+	}
 
 		#image { 
 			background-image: url(../../images/thatmap.png); 

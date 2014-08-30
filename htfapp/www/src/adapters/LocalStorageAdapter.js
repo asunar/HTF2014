@@ -70,12 +70,26 @@ var LocalStorageAdapter = function() {
         localStorage.setItem("TCA:ConfDays", JSON.stringify( this.getAcceptedSessionsByTimeSlot()));
     };
 
+		this.getTimeOddEvenMap = function(confDays){
+			var accumulatedMap = {}
+			_.uniq(_.flatten(confDays.map(function(s) {
+								return s.Sessions;
+						})).map(function(aSession) {
+								return aSession.Time.replace(':',''); //colon breaks JSON
+						})).forEach(function(t, i) {
+								accumulatedMap[t] = i % 2 === 0 ? "even" : "odd";
+						});
+			return accumulatedMap;
+		}
+
     this.getSessions = function() {
         var storedConfDays = JSON.parse(localStorage["TCA:ConfDays"]);
+				var timeOddEvenMap = this.getTimeOddEvenMap(storedConfDays);
         var that = this;
         storedConfDays.forEach(function(d) {
             d.Sessions.forEach(function(s) {
                 s.IsInMySchedule = that.isSessionInMySchedule(s.Id);
+								s.OddOrEvenTime = timeOddEvenMap[s.Time.replace(':','')]; 
             });
         });
         return storedConfDays;
