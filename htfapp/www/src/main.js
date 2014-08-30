@@ -63,7 +63,7 @@
         };
 
         var showMySchedule = function() {
-            var sessionsToDisplay = adapter.getSessionsInMySchedule();
+            var sessionsToDisplay = adapter.getSessionsInMySchedule_TimeOddEvenMap();
             replaceChildren(content, new SessionsView(sessionsToDisplay, adapter).render());
         };
 

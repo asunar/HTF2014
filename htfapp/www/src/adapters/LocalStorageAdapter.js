@@ -188,6 +188,19 @@ var LocalStorageAdapter = function() {
         });
     };
 
+		this.getSessionsInMySchedule_TimeOddEvenMap = function() {
+			var confDays = this.getSessionsInMySchedule();
+			var timeOddEvenMap = this.getTimeOddEvenMap(confDays);
+			
+        var that = this;
+        confDays.forEach(function(d) {
+            d.Sessions.forEach(function(s) {
+								s.OddOrEvenTime = timeOddEvenMap[s.Time.replace(':','')]; 
+            });
+        });
+        return confDays;			
+		} 
+
     this.isSessionInMySchedule = function(id) {
         return _.contains(this.getSessionIdsInMySchedule(), id);
     };
