@@ -46,7 +46,47 @@ var LocalStorageAdapter = function() {
         return _.flatten(this.getGridMenuItems().rows);
     };
 
-    this.getAcceptedSessionsByTimeSlot = function() {
+    this.populateConfDays = function() {
+			var xhr = getHTTPObject();
+
+			xhr.open("GET", "http://jsbin.com/nikuwo.js");
+
+			xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4 && xhr.status == 200) {
+							console.log('Updated from server');
+							localStorage.setItem("TCA:ConfDays", xhr.responseText);
+							return;
+					} else {
+						if (xhr.readyState == 4){
+						 console.log("Request failed");
+							var confDays = localStorage["TCA:ConfDays"];
+							if (confDays) {
+									console.log('Loaded from localStorage');
+							} else {
+									console.log('Loaded seed data');
+									var seedData = new HTF2014Data().getAcceptedSessionsByTimeSlot(); 
+									localStorage.setItem("TCA:ConfDays", JSON.stringify(seedData));
+							}
+
+						}
+					} 
+
+			}
+
+			
+
+			xhr.send(null);				
+
+				
+			 				
+
+				//if not connected 
+				//	if localStorage is empty then load from HTF2014Data
+				//	else load from localStorage
+				//if connected
+				//	send an XHR request to get latestSchedule since date x
+				//	if null/empty then load from localStorage
+				//	else store resp in localStorage, return resp 
         return new HTF2014Data().getAcceptedSessionsByTimeSlot();
     };
 
@@ -54,9 +94,7 @@ var LocalStorageAdapter = function() {
         return new HTF2014Data().getSpeakers();
     };
 
-    this.populateConfDays = function() {
-
-
+    this.populateConfDays123 = function() {
         localStorage.setItem("TCA:ConfDays", JSON.stringify( this.getAcceptedSessionsByTimeSlot()));
     };
 

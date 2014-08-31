@@ -10,7 +10,7 @@ var SessionDetailsView = function(sessionsToDisplay, adapter) {
 				<div>{{ Day }}</div>  \
 				{{#Sessions}} \
 					{{#.}} \
-					<div>{{Time}}</div> \
+					<div>{{Time}} - {{ ScheduledRoom }}</div> \
 					<div>{{SpeakerNames}}</div> \
 					<div>{{Description}}</div> \
 					{{/ .}} \
