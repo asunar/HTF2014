@@ -7,7 +7,7 @@ var NavigationBarView = function(adapter) {
     this.render = function() {
 
 				var template = 
-			"<nav class='bar bar-tab' style='height:10%'>"
+			"<nav class='bar bar-tab'>"
 		+		'<a class="tab-item active" href="#">'
 		+     "<i class='fa fa-home fa-w fa-2x'></i>"
 		+		"</a>"	

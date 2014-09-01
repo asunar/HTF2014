@@ -76,26 +76,10 @@ var LocalStorageAdapter = function() {
 			
 
 			xhr.send(null);				
-
-				
-			 				
-
-				//if not connected 
-				//	if localStorage is empty then load from HTF2014Data
-				//	else load from localStorage
-				//if connected
-				//	send an XHR request to get latestSchedule since date x
-				//	if null/empty then load from localStorage
-				//	else store resp in localStorage, return resp 
-        return new HTF2014Data().getAcceptedSessionsByTimeSlot();
     };
 
     this.getSpeakers = function() {
         return new HTF2014Data().getSpeakers();
-    };
-
-    this.populateConfDays123 = function() {
-        localStorage.setItem("TCA:ConfDays", JSON.stringify( this.getAcceptedSessionsByTimeSlot()));
     };
 
 		this.getTimeOddEvenMap = function(confDays){
