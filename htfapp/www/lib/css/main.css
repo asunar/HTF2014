@@ -136,12 +136,12 @@ textarea {
 
 
 		#image { 
-			background-image: url(../../images/htfmap.png); 
+			background-image: url(../../images/htfMap.png); 
 			background-repeat: no-repeat;
 	}
 	@media only screen and (max-width: 320px) {
 			#image { 
-					background-image: url(../../images/htfmap_small.png); 
+					background-image: url(../../images/htfMap_small.png); 
 					background-repeat: no-repeat;
 			}
 	}
