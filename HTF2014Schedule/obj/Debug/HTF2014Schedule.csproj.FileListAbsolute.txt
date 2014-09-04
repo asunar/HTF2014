@@ -1,8 +1,0 @@
-C:\code\HTF2014\HTF2014Schedule\bin\Debug\HTF2014Schedule.exe.config
-C:\code\HTF2014\HTF2014Schedule\bin\Debug\HTF2014Schedule.exe
-C:\code\HTF2014\HTF2014Schedule\bin\Debug\HTF2014Schedule.pdb
-C:\code\HTF2014\HTF2014Schedule\obj\Debug\HTF2014Schedule.csprojResolveAssemblyReference.cache
-C:\code\HTF2014\HTF2014Schedule\obj\Debug\HTF2014Schedule.exe
-C:\code\HTF2014\HTF2014Schedule\obj\Debug\HTF2014Schedule.pdb
-C:\code\HTF2014\HTF2014Schedule\bin\Debug\Newtonsoft.Json.dll
-C:\code\HTF2014\HTF2014Schedule\bin\Debug\Newtonsoft.Json.xml
