@@ -49,13 +49,6 @@
 
         };
 
-        var showFamilySessions = function() {
-            var category = 'Family';
-            var sessionsToDisplay = adapter.getSessionsByCategory(category);
-            replaceChildren(content, new SessionsView(sessionsToDisplay, adapter).render());
-
-        };
-
         var showSessionDetails = function() {
             var id = parseInt(getUrlVars().id, 10);
             var sessionToDisplay = adapter.getSessionById(id);
@@ -71,10 +64,6 @@
             replaceChildren(content, new MapView().render());
         };
 
-        var showPolicies = function() {
-            replaceChildren(content, new PoliciesView().render());
-        };
-
         var hashWithoutQueryString = hash;
         if (hash.lastIndexOf('?') !== -1) {
             hashWithoutQueryString = hash.substring(0, hash.lastIndexOf('?'))
@@ -85,11 +74,9 @@
             '#sessions': showSessions,
             '#speakers': showSpeakers,
             '#showsessionsbyspeaker': showSessionsBySpeakers,
-            '#familysessions': showFamilySessions,
             '#sessiondetails': showSessionDetails,
             '#myschedule': showMySchedule,
             '#map': showMap,
-            '#policies': showPolicies,
         };
 
         routeTable[hashWithoutQueryString]();
