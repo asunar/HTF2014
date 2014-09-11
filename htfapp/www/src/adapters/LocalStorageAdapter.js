@@ -79,7 +79,13 @@ var LocalStorageAdapter = function() {
     };
 
     this.getSpeakers = function() {
-        return new HTF2014Data().getSpeakers();
+			var nestedSpeakers = this.getSessions().map(function(d){
+				return d.Sessions.map(function(s){
+					 return s.Speakers;
+				});
+			})			
+			var uniqueSpeakers = _.uniq(_.flatten(nestedSpeakers), 'UserName'); 
+			return _.sortBy(uniqueSpeakers, 'FirstName');
     };
 
 		this.getTimeOddEvenMap = function(confDays){
